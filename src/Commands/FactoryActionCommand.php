@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace CodeWithDennis\FactoryAction\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FactoryActionCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-factory-action';
 
     public $description = 'My command';
 
