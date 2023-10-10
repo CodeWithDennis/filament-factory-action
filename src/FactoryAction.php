@@ -2,7 +2,6 @@
 
 namespace CodeWithDennis\FactoryAction;
 
-use App\Models\Profile;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
@@ -18,6 +17,7 @@ class FactoryAction extends Action
         if (! is_null($action)) {
             throw new \Exception('You can\'t override the action. Sorry.');
         }
+
         return $this;
     }
 
@@ -36,7 +36,7 @@ class FactoryAction extends Action
                     ->required(),
             ])
             ->action(null)
-            ->modalSubmitAction(fn($livewire) => $this->myCustomAction($livewire->getModel()))
+            ->modalSubmitAction(fn ($livewire) => $this->myCustomAction($livewire->getModel()))
             ->requiresConfirmation();
     }
 
