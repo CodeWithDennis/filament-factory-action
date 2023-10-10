@@ -42,7 +42,7 @@ class FactoryAction extends Action
             ->color('success')
             ->modalWidth('md')
             ->modalAlignment('center')
-            ->modalHeading(fn($livewire) => __('Generate ' . ucfirst($livewire->getTable()->getPluralModelLabel())))
+            ->modalHeading(fn ($livewire) => __('Generate ' . ucfirst($livewire->getTable()->getPluralModelLabel())))
             ->modalDescription(__('This action will create new records in the database. Are you sure you would like to proceed?'))
             ->modalFooterActionsAlignment('right')
             ->action('createFactory');
