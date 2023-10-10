@@ -16,7 +16,7 @@ class FactoryAction extends Action
     public function action(Closure | string | null $action): static
     {
         if ($action !== 'createFactory') {
-            throw new \Exception('You can\'t override the action. Sorry.');
+            throw new \Exception('You\'re unable to override the action for this plugin');
         }
 
         $this->action = $this->createFactory();
