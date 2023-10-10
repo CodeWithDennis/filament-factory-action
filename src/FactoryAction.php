@@ -2,6 +2,7 @@
 
 namespace CodeWithDennis\FactoryAction;
 
+use App\Models\Profile;
 use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
@@ -17,7 +18,6 @@ class FactoryAction extends Action
         if (! is_null($action)) {
             throw new \Exception('You can\'t override the action. Sorry.');
         }
-
         return $this;
     }
 
@@ -36,17 +36,13 @@ class FactoryAction extends Action
                     ->required(),
             ])
             ->action(null)
-            ->modalSubmitAction($this->myCustomAction())
+            ->modalSubmitAction(fn($livewire) => $this->myCustomAction($livewire->getModel()))
             ->requiresConfirmation();
     }
 
-    public function myCustomAction(): Action
+    public function myCustomAction(string $model)
     {
-        $model = app($this->getModel());
-
-        return Action::make('generate_factory')
-            ->action(function (array $data) use ($model) {
-                $model::factory($data['quantity'])->create();
-            });
+        // TODO: Get the form data and replace '5' with the quantity value
+        $model::factory(5)->create();
     }
 }
