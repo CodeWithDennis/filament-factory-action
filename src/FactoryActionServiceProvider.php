@@ -24,18 +24,10 @@ class FactoryActionServiceProvider extends PackageServiceProvider
 
     public function configurePackage(Package $package): void
     {
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
         $package->name(static::$name)
-            ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
                     ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('codewithdennis/filament-factory-action');
             });
 
@@ -45,17 +37,10 @@ class FactoryActionServiceProvider extends PackageServiceProvider
             $package->hasConfigFile();
         }
 
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
-        }
-
         if (file_exists($package->basePath('/../resources/lang'))) {
             $package->hasTranslations();
         }
 
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
     }
 
     public function packageRegistered(): void
@@ -64,31 +49,7 @@ class FactoryActionServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
-        // Asset Registration
-        FilamentAsset::register(
-            $this->getAssets(),
-            $this->getAssetPackageName()
-        );
 
-        FilamentAsset::registerScriptData(
-            $this->getScriptData(),
-            $this->getAssetPackageName()
-        );
-
-        // Icon Registration
-        FilamentIcon::register($this->getIcons());
-
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/filament-factory-action/{$file->getFilename()}"),
-                ], 'filament-factory-action-stubs');
-            }
-        }
-
-        // Testing
-        Testable::mixin(new TestsFactoryAction());
     }
 
     protected function getAssetPackageName(): ?string
@@ -101,11 +62,7 @@ class FactoryActionServiceProvider extends PackageServiceProvider
      */
     protected function getAssets(): array
     {
-        return [
-            // AlpineComponent::make('filament-factory-action', __DIR__ . '/../resources/dist/components/filament-factory-action.js'),
-            Css::make('filament-factory-action-styles', __DIR__ . '/../resources/dist/filament-factory-action.css'),
-            Js::make('filament-factory-action-scripts', __DIR__ . '/../resources/dist/filament-factory-action.js'),
-        ];
+        return [];
     }
 
     /**
@@ -113,9 +70,7 @@ class FactoryActionServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
-            FactoryActionCommand::class,
-        ];
+        return [];
     }
 
     /**
@@ -147,8 +102,6 @@ class FactoryActionServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
-        return [
-            'create_filament-factory-action_table',
-        ];
+        return [];
     }
 }
