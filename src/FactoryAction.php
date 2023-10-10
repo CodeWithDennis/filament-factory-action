@@ -4,7 +4,6 @@ namespace CodeWithDennis\FactoryAction;
 
 use Closure;
 use Filament\Actions\Action;
-use Filament\Actions\StaticAction;
 use Filament\Forms\Components\TextInput;
 
 //use Filament\Tables\Actions\Action;
