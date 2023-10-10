@@ -13,9 +13,9 @@ class FactoryAction extends Action
 {
     protected ?string $name = 'generate';
 
-    public function action(Closure|string|null $action): static
+    public function action(Closure | string | null $action): static
     {
-        if (!is_null($action)) {
+        if (! is_null($action)) {
             throw new \Exception('You can\'t override the action. Sorry.');
         }
 
@@ -28,7 +28,7 @@ class FactoryAction extends Action
 
         $this->icon('heroicon-o-cog-8-tooth')
             ->color('warning')
-            ->hidden(fn() => app()->isProduction())
+            ->hidden(fn () => app()->isProduction())
             ->form([
                 TextInput::make('quantity')
                     ->numeric()
