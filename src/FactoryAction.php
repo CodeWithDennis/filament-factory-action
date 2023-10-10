@@ -24,7 +24,7 @@ class FactoryAction extends Action
 
     protected function setUp(): void
     {
-        self::setUp();
+        parent::setUp();
 
         $this->icon('heroicon-o-cog-8-tooth')
             ->color('warning')
@@ -41,11 +41,11 @@ class FactoryAction extends Action
             ->requiresConfirmation();
     }
 
-    public function myCustomAction(): StaticAction
+    public function myCustomAction(): Action
     {
         $model = app($this->getModel());
 
-        return StaticAction::make('generate_factory')
+        return Action::make('generate_factory')
             ->action(function (array $data) use ($model) {
                 $model::factory($data['quantity'])->create();
             });
