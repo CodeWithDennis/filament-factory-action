@@ -38,12 +38,19 @@ class FactoryAction extends Action
                     ->default(1)
                     ->required(),
             ])
-            ->requiresConfirmation()
+            ->modalIcon('heroicon-o-cog-8-tooth')
+            ->color('success')
+            ->modalWidth('md')
+            ->modalAlignment('center')
+            ->modalHeading(fn($livewire) => __('Generate ' . ucfirst($livewire->getTable()->getPluralModelLabel())))
+            ->modalDescription(__('This action will create new records in the database. Are you sure you would like to proceed?'))
+            ->modalFooterActionsAlignment('right')
             ->action('createFactory');
     }
 
     private function createFactory(): Closure
     {
+
         return function (array $data, $livewire) {
             $livewire->getModel()::factory($data['quantity'])->create();
         };
