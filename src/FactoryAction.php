@@ -6,17 +6,20 @@ use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 
-//use Filament\Tables\Actions\Action;
-
 class FactoryAction extends Action
 {
-    protected ?string $name = 'generate';
-
-    public function action(Closure | string | null $action): static
+    public static function getDefaultName(): ?string
     {
-        if (! is_null($action)) {
+        return 'generate';
+    }
+
+    public function action(Closure|string|null $action): static
+    {
+        if ($action !== 'createFactory') {
             throw new \Exception('You can\'t override the action. Sorry.');
         }
+
+        $this->action = $this->createFactory();
 
         return $this;
     }
@@ -27,7 +30,7 @@ class FactoryAction extends Action
 
         $this->icon('heroicon-o-cog-8-tooth')
             ->color('warning')
-            ->hidden(fn () => app()->isProduction())
+            ->hidden(fn() => app()->isProduction())
             ->form([
                 TextInput::make('quantity')
                     ->numeric()
@@ -35,14 +38,14 @@ class FactoryAction extends Action
                     ->default(1)
                     ->required(),
             ])
-            ->action(null)
-            ->modalSubmitAction(fn ($livewire) => $this->myCustomAction($livewire->getModel()))
-            ->requiresConfirmation();
+            ->requiresConfirmation()
+            ->action('createFactory');
     }
 
-    public function myCustomAction(string $model)
+    private function createFactory(): Closure
     {
-        // TODO: Get the form data and replace '5' with the quantity value
-        $model::factory(5)->create();
+        return function (array $data, $livewire) {
+            $livewire->getModel()::factory($data['quantity'])->create();
+        };
     }
 }
