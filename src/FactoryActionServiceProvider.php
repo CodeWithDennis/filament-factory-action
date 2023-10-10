@@ -2,6 +2,8 @@
 
 namespace CodeWithDennis\FactoryAction;
 
+use CodeWithDennis\FactoryAction\Commands\FactoryActionCommand;
+use CodeWithDennis\FactoryAction\Testing\TestsFactoryAction;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -13,8 +15,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use CodeWithDennis\FactoryAction\Commands\FactoryActionCommand;
-use CodeWithDennis\FactoryAction\Testing\TestsFactoryAction;
 
 class FactoryActionServiceProvider extends PackageServiceProvider
 {
