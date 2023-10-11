@@ -63,17 +63,17 @@ class ListProfiles extends ListRecords
 }
 ```
 
-You can create relational records with the following example. Just make certain that these models also possess their respective factories
+You can create/attach relational records with the following example. Just make certain that these models also possess their respective factories
 
 ```PHP
 protected function getHeaderActions(): array
 {
     return [
         FactoryAction::make()
-            // Create or Create and Attach
-            ->hasMany([Category::class => 2])
-            // Attach
-            ->belongsToMany([Badge::class => 2]),
+            // If you want to create or create and attach you can do so using `hasMany`
+            ->hasMany([Badge::class, Category::class])
+            // If you want to attach existing models you can do so using `belongsToMany`
+            ->belongsToMany([Badge::class, Category::class]),
     ];
 }
 ```
