@@ -3,7 +3,8 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/codewithdennis/filament-factory-action.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/filament-factory-action)
 [![Total Downloads](https://img.shields.io/packagist/dt/codewithdennis/filament-factory-action.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/filament-factory-action)
 
-![Filament Factory Action](https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/31b5f00f-f10b-42f5-b18d-ca75e8a458f7)
+![Filament Factory Action](https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/405e92b9-68f5-4983-9619-2ce00a56eeab)
+
 
 This plugin adds a new feature to the Filament admin panel table, enabling easy generation of test records for your database tables using your Laravel Factory definitions.
 
