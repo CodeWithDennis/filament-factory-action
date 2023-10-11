@@ -70,7 +70,7 @@ protected function getHeaderActions(): array
 {
     return [
         FactoryAction::make()
-            // Create new relational record
+            // Create or Create and Attach
             ->hasMany([Category::class => 2])
             // Attach
             ->belongsToMany([Badge::class => 2]),
