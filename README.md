@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/codewithdennis/filament-factory-action.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/filament-factory-action)
 
 
-This plugin introduces a new action to the Filament admin panel table, allowing you to effortlessly generate records for your database tables based on your Laravel Factory definitions.
+This plugin adds a new feature to the Filament admin panel table, enabling easy generation of test records for your database tables using your Laravel Factory definitions.
 
 ## Installation
 You can install the package via composer:
