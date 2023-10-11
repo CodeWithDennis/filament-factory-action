@@ -1,64 +1,59 @@
-# Integrate an action into tables for data generation via Laravel factoriess
+# Filament Factory Action
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/codewithdennis/filament-factory-action.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/filament-factory-action)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/codewithdennis/filament-factory-action/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/codewithdennis/filament-factory-action/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/codewithdennis/filament-factory-action/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/codewithdennis/filament-factory-action/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/codewithdennis/filament-factory-action.svg?style=flat-square)](https://packagist.org/packages/codewithdennis/filament-factory-action)
 
 
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This plugin introduces a new action to the Filament admin panel table, allowing you to effortlessly generate records for your database tables based on your Laravel Factory definitions.
 
 ## Installation
-
 You can install the package via composer:
 
 ```bash
 composer require codewithdennis/filament-factory-action
 ```
 
-You can publish and run the migrations with:
+## Usage Example
 
-```bash
-php artisan vendor:publish --tag="filament-factory-action-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="filament-factory-action-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="filament-factory-action-views"
-```
-
-This is the contents of the published config file:
+Prior to utilizing this action, it is essential to ensure that you have set up a [factory](https://laravel.com/docs/10.x/eloquent-factories) for your model.
 
 ```php
-return [
-];
-```
+class ProfileFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->company(),
+            'is_public' => rand(0, 1),
+        ];
+    }
+}
+````
 
-## Usage
+Suppose you already possess a `ProfileResource` within the Filament framework. You can integrate the action into the ListProfiles class, as demonstrated in the following example.
 
 ```php
-$factoryAction = new CodeWithDennis\FactoryAction();
-echo $factoryAction->echoPhrase('Hello, CodeWithDennis!');
+use App\Filament\Resources\ProfileResource;
+use CodeWithDennis\FactoryAction\FactoryAction;
+use Filament\Actions;
+use Filament\Resources\Pages\ListRecords;
+
+class ListProfiles extends ListRecords
+{
+    protected static string $resource = ProfileResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            FactoryAction::make(),
+            Actions\CreateAction::make()
+        ];
+    }
+}
 ```
 
-## Testing
-
-```bash
-composer test
-```
-
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+## Showcase
+_image here_
 
 ## Contributing
 
