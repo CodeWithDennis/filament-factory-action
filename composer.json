@@ -1,10 +1,12 @@
 {
     "name": "codewithdennis/filament-factory-action",
-    "description": "Integrate an action into tables for data generation via Laravel factoriess",
+    "description": "This plugin adds a new feature to the Filament admin panel table, enabling easy generation of test records for your database tables using your Laravel Factory definitions.",
     "keywords": [
         "CodeWithDennis",
         "laravel",
-        "filament-factory-action"
+        "filament-factory-action",
+        "filament",
+        "factories"
     ],
     "homepage": "https://github.com/codewithdennis/filament-factory-action",
     "support": {
