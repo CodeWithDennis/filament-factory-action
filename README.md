@@ -63,24 +63,23 @@ class ListProfiles extends ListRecords
 }
 ```
 
-You can create `hasMany` relational records with the following example. Just make certain that these models also possess their respective factories
+You can create relational records with the following example. Just make certain that these models also possess their respective factories
 
 ```PHP
 protected function getHeaderActions(): array
 {
     return [
         FactoryAction::make()
-            ->hasMany([
-                Category::class => 5,
-                Badge::class => 5,
-           ]),
+            // Create new relational record
+            ->hasMany([Category::class => 2])
+            // Attach
+            ->belongsToMany([Badge::class => 2]),
     ];
 }
 ```
 
 ## Showcase
 <img width="1420" alt="modal" src="https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/a4d6a785-977e-4c3c-ad03-96ee06bd3c06">
-
 
 ## Contributing
 

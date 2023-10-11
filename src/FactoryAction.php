@@ -10,6 +10,8 @@ class FactoryAction extends Action
 {
     protected array $hasManyRelations = [];
 
+    protected array $belongsToManyRelations = [];
+
     public static function getDefaultName(): ?string
     {
         return 'generate';
@@ -44,9 +46,16 @@ class FactoryAction extends Action
         ];
     }
 
-    public function hasMany(array $relations): self
+    public function hasMany(array $relations): static
     {
         $this->hasManyRelations = $relations;
+
+        return $this;
+    }
+
+    public function belongsToMany(array $relations): static
+    {
+        $this->belongsToManyRelations = $relations;
 
         return $this;
     }
@@ -76,6 +85,11 @@ class FactoryAction extends Action
 
             foreach ($this->hasManyRelations as $hasManyRelation => $quantity) {
                 $factory = $factory->has($hasManyRelation::factory()->count($quantity));
+            }
+
+            foreach ($this->belongsToManyRelations as $belongsToManyRelation => $quantity) {
+                $models = $belongsToManyRelation::inRandomOrder()->limit($quantity)->get();
+                $factory = $factory->hasAttached($models);
             }
 
             return $factory->create();
