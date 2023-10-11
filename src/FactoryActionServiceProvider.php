@@ -14,9 +14,7 @@ class FactoryActionServiceProvider extends PackageServiceProvider
     {
         $package->name(static::$name)
             ->hasInstallCommand(function (InstallCommand $command) {
-                $command
-                    ->publishConfigFile()
-                    ->askToStarRepoOnGitHub('codewithdennis/filament-factory-action');
+                $command->askToStarRepoOnGitHub('codewithdennis/filament-factory-action');
             });
     }
 }
