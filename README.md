@@ -6,6 +6,8 @@
 
 This plugin adds a new feature to the Filament admin panel table, enabling easy generation of test records for your database tables using your Laravel Factory definitions.
 
+_This plugin extends the standard Filament action, ensuring that you can continue to utilize all the actions that are typically available within the action class_
+
 ## Installation
 You can install the package via composer:
 
@@ -45,7 +47,10 @@ class ListProfiles extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            FactoryAction::make(),
+            FactoryAction::make()
+                ->color('danger')
+                // ->slideOver()
+                ->icon('heroicon-o-wrench'),
             Actions\CreateAction::make()
         ];
     }
@@ -54,6 +59,8 @@ class ListProfiles extends ListRecords
 
 ## Showcase
 https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/6d011505-eb39-417a-b8ad-ecad59c67d73
+https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/3ac2405a-8681-4d6a-a1df-0f18609f453e
+
 
 
 ## Contributing
