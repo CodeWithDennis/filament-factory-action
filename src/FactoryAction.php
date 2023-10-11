@@ -8,12 +8,14 @@ use Filament\Forms\Components\TextInput;
 
 class FactoryAction extends Action
 {
+    protected array $relations = [];
+
     public static function getDefaultName(): ?string
     {
         return 'generate';
     }
 
-    public function action(Closure | string | null $action): static
+    public function action(Closure|string|null $action): static
     {
         if ($action !== 'createFactory') {
             throw new \Exception('You\'re unable to override the action for this plugin');
@@ -24,7 +26,7 @@ class FactoryAction extends Action
         return $this;
     }
 
-    public function form(array | Closure | null $form): static
+    public function form(array|Closure|null $form): static
     {
         $this->form = $this->getDefaultForm();
 
@@ -42,19 +44,26 @@ class FactoryAction extends Action
         ];
     }
 
+    public function createRelations(array $relations): self
+    {
+        $this->relations = $relations;
+
+        return $this;
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->icon('heroicon-o-cog-8-tooth')
             ->color('warning')
-            ->hidden(fn () => app()->isProduction())
+            ->hidden(fn() => app()->isProduction())
             ->form($this->getDefaultForm())
             ->modalIcon('heroicon-o-cog-8-tooth')
             ->color('success')
             ->modalWidth('md')
             ->modalAlignment('center')
-            ->modalHeading(fn ($livewire) => __('Generate ' . ucfirst($livewire->getTable()->getPluralModelLabel())))
+            ->modalHeading(fn($livewire) => __('Generate ' . ucfirst($livewire->getTable()->getPluralModelLabel())))
             ->modalDescription(__('This action will create new records in the database. Are you sure you would like to proceed?'))
             ->modalFooterActionsAlignment('right')
             ->action('createFactory');
@@ -62,9 +71,14 @@ class FactoryAction extends Action
 
     private function createFactory(): Closure
     {
-
         return function (array $data, $livewire) {
-            $livewire->getModel()::factory($data['quantity'])->create();
+            $factory = $livewire->getModel()::factory($data['quantity']);
+
+            foreach ($this->relations as $relation => $quantity) {
+                $factory = $factory->has($relation::factory()->count($quantity));
+            }
+
+            return $factory->create();
         };
     }
 }
