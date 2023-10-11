@@ -63,10 +63,7 @@ class ListProfiles extends ListRecords
 ```
 
 ## Showcase
-https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/6d011505-eb39-417a-b8ad-ecad59c67d73
-
-https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/3ac2405a-8681-4d6a-a1df-0f18609f453e
-
+<img width="1420" alt="modal" src="https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/a4d6a785-977e-4c3c-ad03-96ee06bd3c06">
 
 
 ## Contributing
