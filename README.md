@@ -78,6 +78,12 @@ protected function getHeaderActions(): array
 }
 ```
 
+The default behavior is to hide the action in production environments, but you can override this by using your own logic:
+
+```php
+->hidden(fn() => false)
+```
+
 ## Showcase
 <img width="1420" alt="example-1" src="https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/a4d6a785-977e-4c3c-ad03-96ee06bd3c06">
 <img width="1399" alt="example-2" src="https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/8eab103c-4ef3-4563-9202-afcb88d17ad2">
