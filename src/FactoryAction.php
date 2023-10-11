@@ -4,6 +4,7 @@ namespace CodeWithDennis\FactoryAction;
 
 use Closure;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 
 class FactoryAction extends Action
@@ -17,7 +18,7 @@ class FactoryAction extends Action
         return 'generate';
     }
 
-    public function action(Closure | string | null $action): static
+    public function action(Closure|string|null $action): static
     {
         if ($action !== 'createFactory') {
             throw new \Exception('You\'re unable to override the action for this plugin');
@@ -28,7 +29,7 @@ class FactoryAction extends Action
         return $this;
     }
 
-    public function form(array | Closure | null $form): static
+    public function form(array|Closure|null $form): static
     {
         $this->form = $this->getDefaultForm();
 
@@ -39,10 +40,35 @@ class FactoryAction extends Action
     {
         return [
             TextInput::make('quantity')
+                ->label(fn($livewire) => __('Amount of ' . $livewire->getTable()->getPluralModelLabel()))
                 ->numeric()
                 ->rules('numeric|min:1')
                 ->default(1)
+                ->columns()
                 ->required(),
+
+            TextInput::make('relational_quantity')
+                ->label(fn($livewire) => __('Amount of relational models'))
+                ->numeric()
+                ->visible(fn() => count($this->belongsToManyRelations) || count($this->hasManyRelations))
+                ->rules('numeric|min:1')
+                ->default(1)
+                ->columns()
+                ->required(),
+
+            Select::make('attach')
+                ->options(fn() => collect($this->belongsToManyRelations)
+                    ->mapWithKeys(fn($value) => [$value => __(class_basename($value))]))
+                ->visible(fn() => count($this->belongsToManyRelations))
+                ->native(false)
+                ->multiple(),
+
+            Select::make('create')
+                ->options(fn() => collect($this->hasManyRelations)
+                    ->mapWithKeys(fn($value) => [$value => __(class_basename($value))]))
+                ->visible(fn() => count($this->hasManyRelations))
+                ->native(false)
+                ->multiple(),
         ];
     }
 
@@ -66,15 +92,16 @@ class FactoryAction extends Action
 
         $this->icon('heroicon-o-cog-8-tooth')
             ->color('warning')
-            ->hidden(fn () => app()->isProduction())
+            ->hidden(fn() => app()->isProduction())
             ->form($this->getDefaultForm())
             ->modalIcon('heroicon-o-cog-8-tooth')
             ->color('success')
             ->modalWidth('md')
             ->modalAlignment('center')
-            ->modalHeading(fn ($livewire) => __('Generate ' . ucfirst($livewire->getTable()->getPluralModelLabel())))
+            ->modalHeading(fn($livewire) => __('Generate'))
             ->modalDescription(__('This action will create new records in the database. Are you sure you would like to proceed?'))
             ->modalFooterActionsAlignment('right')
+            ->closeModalByClickingAway(false)
             ->action('createFactory');
     }
 
@@ -83,13 +110,17 @@ class FactoryAction extends Action
         return function (array $data, $livewire) {
             $factory = $livewire->getModel()::factory($data['quantity']);
 
-            foreach ($this->hasManyRelations as $hasManyRelation => $quantity) {
-                $factory = $factory->has($hasManyRelation::factory()->count($quantity));
+            foreach ($this->hasManyRelations as $hasManyRelation) {
+                if (isset($data['create']) && in_array($hasManyRelation, $data['create'])) {
+                    $factory = $factory->has($hasManyRelation::factory()->count($data['relational_quantity']));
+                }
             }
 
-            foreach ($this->belongsToManyRelations as $belongsToManyRelation => $quantity) {
-                $models = $belongsToManyRelation::inRandomOrder()->limit($quantity)->get();
-                $factory = $factory->hasAttached($models);
+            foreach ($this->belongsToManyRelations as $belongsToManyRelation) {
+                if (isset($data['attach']) && in_array($belongsToManyRelation, $data['attach'])) {
+                    $models = $belongsToManyRelation::inRandomOrder()->limit($data['relational_quantity'])->get();
+                    $factory = $factory->hasAttached($models);
+                }
             }
 
             return $factory->create();
