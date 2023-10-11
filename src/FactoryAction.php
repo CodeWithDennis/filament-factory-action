@@ -8,7 +8,7 @@ use Filament\Forms\Components\TextInput;
 
 class FactoryAction extends Action
 {
-    protected array $relations = [];
+    protected array $hasManyRelations = [];
 
     public static function getDefaultName(): ?string
     {
@@ -44,9 +44,9 @@ class FactoryAction extends Action
         ];
     }
 
-    public function createRelations(array $relations): self
+    public function hasMany(array $relations): self
     {
-        $this->relations = $relations;
+        $this->hasManyRelations = $relations;
 
         return $this;
     }
@@ -74,8 +74,8 @@ class FactoryAction extends Action
         return function (array $data, $livewire) {
             $factory = $livewire->getModel()::factory($data['quantity']);
 
-            foreach ($this->relations as $relation => $quantity) {
-                $factory = $factory->has($relation::factory()->count($quantity));
+            foreach ($this->hasManyRelations as $hasManyRelation => $quantity) {
+                $factory = $factory->has($hasManyRelation::factory()->count($quantity));
             }
 
             return $factory->create();

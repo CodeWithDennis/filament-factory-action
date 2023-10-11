@@ -40,7 +40,7 @@ Suppose you already possess a `ProfileResource` within the Filament framework. Y
 FactoryAction::make(),
 ```
 
-```php
+```PHP
 use App\Filament\Resources\ProfileResource;
 use CodeWithDennis\FactoryAction\FactoryAction;
 use Filament\Actions;
@@ -60,6 +60,21 @@ class ListProfiles extends ListRecords
             Actions\CreateAction::make()
         ];
     }
+}
+```
+
+You can create `hasMany` relational records with the following example. Just make certain that these models also possess their respective factories
+
+```PHP
+protected function getHeaderActions(): array
+{
+    return [
+        FactoryAction::make()
+            ->hasMany([
+                Category::class => 5,
+                Badge::class => 5,
+           ]),
+    ];
 }
 ```
 
