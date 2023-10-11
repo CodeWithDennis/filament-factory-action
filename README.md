@@ -78,6 +78,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 ## Credits
 
 - [CodeWithDennis](https://github.com/CodeWithDennis)
+- [Adam Weston](https://github.com/awcodes)
 - [All Contributors](../../contributors)
 
 ## License
