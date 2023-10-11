@@ -8,7 +8,7 @@
 
 This plugin adds a new feature to the Filament admin panel table, enabling easy generation of test records for your database tables using your Laravel Factory definitions.
 
-_This plugin extends the standard Filament action, ensuring that you can continue to utilize all the actions that are typically available within the action class_
+_This plugin extends the standard Filament action, ensuring that you can continue to utilize all the methods that are typically available within the action class_
 
 ## Installation
 You can install the package via composer:
