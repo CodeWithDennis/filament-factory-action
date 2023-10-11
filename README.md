@@ -40,7 +40,7 @@ Suppose you already possess a `ProfileResource` within the Filament framework. Y
 FactoryAction::make(),
 ```
 
-```php
+```PHP
 use App\Filament\Resources\ProfileResource;
 use CodeWithDennis\FactoryAction\FactoryAction;
 use Filament\Actions;
@@ -63,9 +63,23 @@ class ListProfiles extends ListRecords
 }
 ```
 
+You can create/attach relational records with the following example. Just make certain that these models also possess their respective factories
+
+```PHP
+protected function getHeaderActions(): array
+{
+    return [
+        FactoryAction::make()
+            // If you want to create or create and attach you can do so using `hasMany`
+            ->hasMany([Badge::class, Category::class])
+            // If you want to attach existing models you can do so using `belongsToMany`
+            ->belongsToMany([Badge::class, Category::class]),
+    ];
+}
+```
+
 ## Showcase
 <img width="1420" alt="modal" src="https://github.com/CodeWithDennis/filament-factory-action/assets/23448484/a4d6a785-977e-4c3c-ad03-96ee06bd3c06">
-
 
 ## Contributing
 
