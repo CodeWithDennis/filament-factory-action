@@ -36,6 +36,10 @@ class ProfileFactory extends Factory
 Suppose you already possess a `ProfileResource` within the Filament framework. You can integrate the action into the ListProfiles class, as demonstrated in the following example.
 
 ```php
+FactoryAction::make(),
+```
+
+```php
 use App\Filament\Resources\ProfileResource;
 use CodeWithDennis\FactoryAction\FactoryAction;
 use Filament\Actions;
