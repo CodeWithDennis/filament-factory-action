@@ -3,12 +3,15 @@
 namespace CodeWithDennis\FactoryAction;
 
 use Closure;
+use CodeWithDennis\FactoryAction\Traits\RelationshipsTrait;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Illuminate\Database\Eloquent\Model;
 
 class FactoryAction extends Action
 {
+    use RelationshipsTrait;
     protected array $hasManyRelations = [];
 
     protected array $belongsToManyRelations = [];
@@ -86,8 +89,23 @@ class FactoryAction extends Action
         return $this;
     }
 
+    public function relationshipOf(string $model) {
+        
+        $data = collect($this->relationships($model));
+
+        $this->belongsToMany([
+            ...$data->where('type', 'BelongsToMany')->pluck('model')->toArray(),
+            ...$data->where('type', 'MorphToMany')->pluck('model')->toArray(),
+
+        ]);
+
+        $this->hasMany($data->where('type', 'HasMany')->pluck('model')->toArray());
+        return $this;
+    }
+
     protected function setUp(): void
     {
+        
         parent::setUp();
 
         $this->icon('heroicon-o-cog-8-tooth')
