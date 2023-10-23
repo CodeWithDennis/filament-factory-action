@@ -22,7 +22,7 @@ class FactoryAction extends Action
         return 'generate';
     }
 
-    public function action(Closure|string|null $action): static
+    public function action(Closure | string | null $action): static
     {
         if ($action !== 'createFactory') {
             throw new \Exception('You\'re unable to override the action for this plugin');
@@ -33,7 +33,7 @@ class FactoryAction extends Action
         return $this;
     }
 
-    public function form(array|Closure|null $form): static
+    public function form(array | Closure | null $form): static
     {
         $this->form = $this->getDefaultForm();
 
@@ -57,7 +57,7 @@ class FactoryAction extends Action
 
         return [
             TextInput::make('quantity')
-                ->label(fn($livewire) => (new ReflectionClass($livewire->getModel()))->getShortName())
+                ->label(fn ($livewire) => (new ReflectionClass($livewire->getModel()))->getShortName())
                 ->numeric()
                 ->rules('numeric|min:1')
                 ->default(1)
@@ -65,7 +65,7 @@ class FactoryAction extends Action
                 ->required(),
 
             Fieldset::make(__('Relationships'))
-                ->schema($fields)
+                ->schema($fields),
         ];
     }
 
@@ -78,7 +78,7 @@ class FactoryAction extends Action
         foreach ((new ReflectionClass($model))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             if (
                 $method->class !== get_class($model) ||
-                !empty($method->getParameters()) ||
+                ! empty($method->getParameters()) ||
                 $method->getName() === __FUNCTION__
             ) {
                 continue;
@@ -102,13 +102,13 @@ class FactoryAction extends Action
 
         $this->icon('heroicon-o-cog-8-tooth')
             ->color('warning')
-            ->hidden(fn() => app()->isProduction())
+            ->hidden(fn () => app()->isProduction())
             ->form($this->getDefaultForm())
             ->modalIcon('heroicon-o-cog-8-tooth')
             ->color('success')
             ->modalWidth('2xl')
             ->modalAlignment('center')
-            ->modalHeading(fn($livewire) => __('Generate'))
+            ->modalHeading(fn ($livewire) => __('Generate'))
             ->modalDescription(__('This action will create new records in the database. Are you sure you would like to proceed?'))
             ->modalFooterActionsAlignment('right')
             ->closeModalByClickingAway(false)
