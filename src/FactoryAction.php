@@ -6,6 +6,7 @@ use Closure;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Support\Icons\Heroicon;
 
 class FactoryAction extends Action
 {
@@ -90,11 +91,11 @@ class FactoryAction extends Action
     {
         parent::setUp();
 
-        $this->icon('heroicon-o-cog-8-tooth')
+        $this->icon(Heroicon::Cog8Tooth)
             ->color('warning')
             ->hidden(fn () => app()->isProduction())
-            ->form($this->getDefaultForm())
-            ->modalIcon('heroicon-o-cog-8-tooth')
+            ->schema($this->getDefaultForm())
+            ->modalIcon(Heroicon::Cog8Tooth)
             ->color('success')
             ->modalWidth('md')
             ->modalAlignment('center')
