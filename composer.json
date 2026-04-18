@@ -24,7 +24,7 @@
         "php": "^8.2",
         "filament/tables": "^4.0|^5.0",
         "spatie/laravel-package-tools": "^1.15.0",
-        "illuminate/contracts": "^11.28|^12.0"
+        "illuminate/contracts": "^11.28|^12.0|^13.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
